@@ -20,6 +20,7 @@ require 'shoulda-context'
 require "rack/test"
 require 'mocha/minitest'
 
+$TESTING = true
 ENV['RACK_ENV'] = 'test'
 
 #SIDEKIQ Require - need to have sidekiq running!

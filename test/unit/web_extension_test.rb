@@ -1,7 +1,9 @@
 require './test/test_helper'
 
 def app
-  Sidekiq::Web
+  @app ||= Sidekiq::Web.new.tap do |app|
+    app.middlewares.clear
+  end
 end
 
 describe 'Cron web' do
