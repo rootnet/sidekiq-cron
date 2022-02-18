@@ -3,7 +3,13 @@ require './test/test_helper'
 require 'benchmark'
 
 describe 'Performance Poller' do
-  X = 10000
+  # Number of jobs to enqueue
+  JOBS = 10_000
+
+  # As CI is usually a bit slower than local testing we'll allow CI to take a
+  # bit longer to enqueue all tests.
+  TIME = ENV.key?('CI') ? 60 : 40
+
   before do
     Sidekiq.redis = REDIS
     Sidekiq.redis { |conn| conn.del conn.keys('*') }
@@ -21,7 +27,7 @@ describe 'Performance Poller' do
       klass: "CronTestClass"
     }
 
-    X.times do |i|
+    JOBS.times do |i|
       Sidekiq::Cron::Job.create(args.merge(name: "Test#{i}"))
     end
 
@@ -31,7 +37,7 @@ describe 'Performance Poller' do
     Time.stubs(:now).returns(enqueued_time)
   end
 
-  it 'should enqueue 10000 jobs in less than 40s' do
+  it "should enqueue #{JOBS} jobs in less than #{TIME}s" do
     Sidekiq.redis do |conn|
       assert_equal 0, conn.llen("queue:default"), 'Queue should be empty'
     end
@@ -41,10 +47,10 @@ describe 'Performance Poller' do
     }
 
     Sidekiq.redis do |conn|
-      assert_equal X, conn.llen("queue:default"), 'Queue should be full'
+      assert_equal JOBS, conn.llen("queue:default"), 'Queue should be full'
     end
 
     puts "Performance test finished in #{bench.real}"
-    assert_operator bench.real, :<, 40
+    assert_operator bench.real, :<, TIME
   end
 end
