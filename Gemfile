@@ -15,6 +15,7 @@ group :development do
   gem 'jeweler'
 
   gem 'minitest'
+  gem 'minitest-reporters'
   gem 'test-unit'
   gem 'sdoc' # sdoc -N .
 

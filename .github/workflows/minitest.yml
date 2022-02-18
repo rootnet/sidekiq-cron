@@ -41,3 +41,8 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: bundle exec rake
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        if: always()  # Always run even if the previous step fails
+        with:
+          report_paths: './tmp/TEST-*.xml'

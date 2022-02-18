@@ -21,6 +21,19 @@ SimpleCov.start do
   add_group 'SidekiqCron', 'lib/'
 end
 
+# Use a different reporter for CI runs
+require 'minitest/reporters'
+Minitest::Reporters.use!(
+  if ENV['CI']
+    [
+      Minitest::Reporters::DefaultReporter.new(color: false, slow_count: 5),
+      Minitest::Reporters::JUnitReporter.new('tmp', true, single_file: true),
+    ]
+  else
+    Minitest::Reporters::ProgressReporter.new(color: true, slow_count: 5)
+  end,
+)
+
 require "minitest/autorun"
 require 'shoulda-context'
 require "rack/test"
