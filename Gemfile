@@ -23,7 +23,6 @@ group :development do
   gem 'sinatra'
 
   gem 'mocha'
-  gem 'coveralls'
 
   gem 'shotgun'
 

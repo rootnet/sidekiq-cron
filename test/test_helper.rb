@@ -14,8 +14,6 @@ SimpleCov.start do
 
   add_group 'SidekiqCron', 'lib/'
 end
-require 'coveralls'
-Coveralls.wear!
 
 require "minitest/autorun"
 require 'shoulda-context'
