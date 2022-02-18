@@ -6,7 +6,10 @@ name: minitest
   push:
     branches:
       - master
-      - master-rn
+      - support-*
+  schedule:
+    # Every week on Monday at 04:00
+    - cron: '0 4 * * 1'
 
 jobs:
   test:
