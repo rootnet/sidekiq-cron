@@ -3,6 +3,16 @@ v 1.3.0 (in progress)
 
 - add confirmation dialog when enquing jobs from UI
 
+v 1.2.0.1
+---------
+
+- fix redis pipeline deprecation
+- refactored travis to GitHub actions
+- fix Sidekiq::Web dependency on Rack::Session in test suite
+- remove coveralls as we're not the main repository of sidekiq-cron
+- remove redis-namespace from test suite
+- raise redis deprecations instead of outputting them to console
+
 v 1.2.0
 -------
 
