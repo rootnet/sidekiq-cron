@@ -45,4 +45,5 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always()  # Always run even if the previous step fails
         with:
+          check_name: Job Report ${{ matrix.ruby-version }}
           report_paths: './tmp/TEST-*.xml'

@@ -49,6 +49,10 @@ require 'sidekiq/web'
 
 Sidekiq.logger.level = Logger::ERROR
 
+# Make sure we see all deprecations of Redis and fix them
+Redis.silence_deprecations = false
+Redis.raise_deprecations = true
+
 require 'sidekiq/redis_connection'
 redis_url = ENV['REDIS_URL'] || 'redis://0.0.0.0:6379'
 REDIS = Sidekiq::RedisConnection.create(:url => redis_url)
