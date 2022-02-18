@@ -8,6 +8,12 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+# Always show deprecations unless we want them silenced. Use the env variable
+# HIDE_DEPRECATIONS=1 to hide them during testing.
+if Warning.respond_to?(:[]=)
+  Warning[:deprecated] = !ENV['HIDE_DEPRECATIONS']
+end
+
 require 'simplecov'
 SimpleCov.start do
   add_filter "/test/"
