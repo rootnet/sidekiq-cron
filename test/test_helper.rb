@@ -32,10 +32,10 @@ Sidekiq.logger.level = Logger::ERROR
 
 require 'sidekiq/redis_connection'
 redis_url = ENV['REDIS_URL'] || 'redis://0.0.0.0:6379'
-REDIS = Sidekiq::RedisConnection.create(:url => redis_url, :namespace => 'testy')
+REDIS = Sidekiq::RedisConnection.create(:url => redis_url)
 
 Sidekiq.configure_client do |config|
-  config.redis = { :url => redis_url, :namespace => 'testy' }
+  config.redis = { :url => redis_url }
 end
 
 
